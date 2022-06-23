@@ -1,20 +1,5 @@
-const arr = [
-  "push 1",
-  "push 2",
-  "front",
-  "back",
-  "size",
-  "empty",
-  "pop",
-  "pop",
-  "pop",
-  "size",
-  "empty",
-  "pop",
-  "push 3",
-  "empty",
-  "front",
-];
+const fs = require("fs");
+const [n, ...arr] = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 
 let queue = [];
 let left = 0,
