@@ -59,7 +59,6 @@ function process() {
 function main() {
   let day = 0;
   while (process()) day++;
-  console.log(day);
 }
 
 main();
