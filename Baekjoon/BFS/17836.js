@@ -18,6 +18,20 @@ function bfs() {
       continue;
     }
 
+    /*
+    [
+      [i - 1, j],
+      [i, j - 1],
+      [i + 1, j],
+      [i, j + 1],
+    ].forEach(([x, y]) => {
+      if (x >= 0 && x <= n - 1 && y >= 0 && y <= m - 1 && arr[x][y] !== 1 && !visited[x][y]) {
+        visited[x][y] = true;
+        queue.push([x, y, time + 1]);
+      }
+    });
+    */
+
     if (i !== 0 && arr[i - 1][j] !== 1 && !visited[i - 1][j]) {
       visited[i - 1][j] = true;
       queue.push([i - 1, j, time + 1]);
