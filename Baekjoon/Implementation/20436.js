@@ -1,5 +1,8 @@
-const [sl, sr] = "z o".split(" ");
-const input = "zoac";
+const fs = require("fs");
+const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
+
+const [sl, sr] = input[0].split(" ");
+const inputStr = input[1];
 
 const keyboard = [
   ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
@@ -12,7 +15,7 @@ function process() {
   let right = findIndex(sr);
   let sum = 0;
 
-  input.split("").forEach((str) => {
+  inputStr.split("").forEach((str) => {
     const idx = findIndex(str);
     if (idx[1] >= Math.ceil((10 - idx[0]) / 2)) {
       sum += calcLength(right, idx) + 1;
@@ -22,6 +25,7 @@ function process() {
       left = idx;
     }
   });
+
   console.log(sum);
 }
 
