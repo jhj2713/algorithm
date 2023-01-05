@@ -1,5 +1,5 @@
-const input = `100
-0`.split("\n");
+const fs = require("fs");
+const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 
 const n = Number(input[0]);
 const m = Number(input[1]);
