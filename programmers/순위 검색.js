@@ -99,3 +99,76 @@ function solution(info, query) {
 
   return answer;
 }
+
+// 성공 코드
+// info로 가능한 조합들을 미리 만들어놓는게 아니라 query로 가능한 조합을 만들어서 확인하기
+function solution(info, query) {
+  const answer = [];
+  const infoMap = new Map();
+
+  info.forEach((i) => {
+    const [lang, position, career, eats, score] = i.split(" ");
+    const key = `${lang}${position}${career}${eats}`;
+    infoMap.set(key, [...(infoMap.get(key) ?? []), parseFloat(score)]);
+  });
+
+  for (const [key, value] of infoMap.entries()) {
+    infoMap.set(
+      key,
+      value.sort((a, b) => a - b)
+    );
+  }
+
+  query.forEach((q) => {
+    const queryArr = q.split(" ");
+    const score = queryArr[queryArr.length - 1];
+    const [lang, position, career, eats] = q
+      .replace(/and|\d/g, "")
+      .split(" ")
+      .filter(Boolean);
+
+    const langArr = lang === "-" ? ["cpp", "java", "python"] : [lang];
+    const positionArr = position === "-" ? ["backend", "frontend"] : [position];
+    const careerArr = career === "-" ? ["junior", "senior"] : [career];
+    const eatsArr = eats === "-" ? ["chicken", "pizza"] : [eats];
+
+    const totalQuery = [];
+
+    langArr.forEach((lang) => {
+      positionArr.forEach((position) => {
+        careerArr.forEach((career) => {
+          eatsArr.forEach((eats) => {
+            totalQuery.push(`${lang}${position}${career}${eats}`);
+          });
+        });
+      });
+    });
+
+    let sum = 0;
+    totalQuery.forEach((query) => {
+      const infoQuery = infoMap.get(query) ?? [];
+      sum += getOverScoreCount(infoQuery, score);
+    });
+
+    answer.push(sum);
+  });
+
+  function getOverScoreCount(info, score) {
+    let left = 0,
+      right = info.length - 1;
+
+    while (left <= right) {
+      const tmpMid = Math.floor((left + right) / 2);
+
+      if (info[tmpMid] < score) {
+        left = tmpMid + 1;
+      } else {
+        right = tmpMid - 1;
+      }
+    }
+
+    return info.length - left;
+  }
+
+  return answer;
+}
